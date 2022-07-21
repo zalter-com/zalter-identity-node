@@ -1,6 +1,6 @@
 # Zalter Identity - Node.js SDK
 
-An **ESM** software developer kit meant to be used for using the API services offered by Zalter.
+An **ESM** and **CJS** software developer kit meant to be used with the Identity API services offered by Zalter.
 
 ## Requirements
 
@@ -17,23 +17,26 @@ npm install @zalter/identity
 ## Usage
 
 ```javascript
-import { createClient } from '@zalter/identity';
+import { IdentityClient } from '@zalter/identity';
 
-const credentials = {}; // your credentials
+const config = {
+  projectId: '<your-project-id>',
+  credentials: '<your-credentials>' // your credentials
+};
 
-const client = await createClient({
-  credentials
-});
+const identityClient = new IdentityClient(config);
+
+const keyId = '<a-signing-key-id>';
 
 try {
-  const res = await client.getPubKey('nhrnCEGxNH8');
+  const res = await identityClient.getPublicKey(keyId);
   console.log(res);
 } catch (err) {
   console.error(err);
 }
 
 // Destroy the client
-client.destroy();
+identityClient.destroy();
 ```
 
 ## Documentation
