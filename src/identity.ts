@@ -23,12 +23,12 @@ interface GetPublicKeyResponse {
 
 interface IdentityClientConfig {
   projectId: string;
-  credentials: Credentials;
-  endpoint: Endpoint;
+  credentials: string;
+  endpoint?: Endpoint;
 }
 
 /** A client for the Zalter Identity Service */
-class IdentityClient {
+export class IdentityClient {
   readonly #projectId: string;
   readonly #apiClient: ApiClient;
   readonly #credentials: Credentials;
@@ -40,8 +40,30 @@ class IdentityClient {
    * @param {Object} config.endpoint
    */
   constructor(config: IdentityClientConfig) {
+    if (typeof config?.projectId === 'undefined') {
+      throw new Error('\'projectId\' must be provided');
+    }
+
+    if (typeof config?.credentials === 'undefined') {
+      throw new Error('\'credentials\' must be provided');
+    }
+
+    // Decode the credentials
+
+    let credentials: Credentials;
+
+    try {
+      credentials = CBOR.decode(Buffer.from(config.credentials, 'base64'));
+    } catch {
+      throw new Error('Invalid credentials');
+    }
+
+    if (credentials._v !== 'v1') {
+      throw new Error(`Credentials type "${credentials._v}" not supported`);
+    }
+
     this.#projectId = config.projectId;
-    this.#credentials = config.credentials;
+    this.#credentials = credentials;
 
     this.#apiClient = new ApiClient({
       credentials: this.#credentials,
@@ -92,33 +114,8 @@ class IdentityClient {
  * @param {string} config.projectId
  * @param {string} config.credentials
  * @param {Object} [config.endpoint]
+ * @returns {Promise<IdentityClient>}
  */
 export const createClient = async (config: { projectId: string; credentials: string; endpoint?: Endpoint; }): Promise<IdentityClient> => {
-  if (typeof config?.projectId === 'undefined') {
-    throw new Error('\'projectId\' must be provided');
-  }
-
-  if (typeof config?.credentials === 'undefined') {
-    throw new Error('\'credentials\' must be provided');
-  }
-
-  // Decode the credentials
-
-  let credentials: Credentials;
-
-  try {
-    credentials = CBOR.decode(Buffer.from(config.credentials, 'base64'));
-  } catch {
-    throw new Error('Invalid credentials');
-  }
-
-  if (credentials._v !== 'v1') {
-    throw new Error(`Credentials type "${credentials._v}" not supported`);
-  }
-
-  return new IdentityClient({
-    projectId: config.projectId,
-    credentials,
-    endpoint: config.endpoint
-  });
+  return new IdentityClient(config);
 };
