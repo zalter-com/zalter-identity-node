@@ -52,7 +52,7 @@ export async function createServiceException(response: Response): Promise<never>
   } catch {}
 
   throw new ServiceException({
-    code: data?.code || 'unknown_error',
-    message: data?.message || 'Something went wrong'
+    code: data?.error?.code || 'unknown_error',
+    message: data?.error?.message || 'Something went wrong'
   });
 }
