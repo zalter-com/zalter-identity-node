@@ -4,6 +4,5 @@ node_modules
 # Misc
 .idea
 .DS_Store
-lib-cjs
-lib-esm
+lib
 temp

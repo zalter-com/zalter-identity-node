@@ -1,7 +1,7 @@
 import { constants as http2Constants } from 'http2';
 import * as CBOR from '@stablelib/cbor';
 import { Response } from '@zalter/http2-client-node';
-import { ContentType } from './http';
+import { ContentType } from './http.mjs';
 
 const { HTTP2_HEADER_CONTENT_TYPE } = http2Constants;
 

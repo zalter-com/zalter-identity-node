@@ -2,11 +2,11 @@ import { constants as http2Constants } from 'http2';
 import * as CBOR from '@stablelib/cbor';
 import * as Ed25519 from '@stablelib/ed25519';
 import { Client as Http2Client, Headers, Response } from '@zalter/http2-client-node';
-import { API_VERSION } from './constants';
-import { HttpHeader } from './http';
-import { logger } from './logger';
-import { TimeDrifter } from './time-drifter.js';
-import { Credentials, Endpoint } from './types';
+import { API_VERSION } from './constants.mjs';
+import { HttpHeader } from './http.mjs';
+import { logger } from './logger.mjs';
+import { TimeDrifter } from './time-drifter.mjs';
+import { Credentials, Endpoint } from './types.mjs';
 
 const { HTTP2_HEADER_STATUS, HTTP2_HEADER_DATE, HTTP2_HEADER_AUTHORITY, HTTP_STATUS_UNAUTHORIZED } = http2Constants;
 
