@@ -2,13 +2,12 @@
   "compilerOptions": {
     "allowJs": true,
     "noImplicitAny": false,
-    "module": "NodeNext",
+    "module": "ESNext",
     "moduleResolution": "Node",
     "target": "ES2017",
     "sourceMap": false,
     "rootDir": "src",
     "lib": [
-      "dom",
       "ESNext"
     ]
   },

@@ -54,23 +54,23 @@ export class Logger {
     fn(prefix, ...args);
   }
 
-  verbose(...args) {
+  verbose(...args: unknown[]): void {
     this.#write('VERBOSE', ...args);
   }
 
-  debug(...args) {
+  debug(...args: unknown[]): void {
     this.#write('DEBUG', ...args);
   }
 
-  info(...args) {
+  info(...args: unknown[]): void {
     this.#write('INFO', ...args);
   }
 
-  warn(...args) {
+  warn(...args: unknown[]): void {
     this.#write('WARN', ...args);
   }
 
-  error(...args) {
+  error(...args: unknown[]): void {
     this.#write('ERROR', ...args);
   }
 }

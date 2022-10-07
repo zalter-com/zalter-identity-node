@@ -1,5 +1,6 @@
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
+import { terser } from 'rollup-plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 
 const external = [
@@ -10,43 +11,41 @@ const external = [
 ];
 
 const cjsConfig = {
-  input: 'src/index.ts',
+  input: 'src/index.mts',
   output: {
-    file: 'lib-cjs/index.js',
+    file: 'lib/cjs/index.js',
     format: 'cjs'
   },
   plugins: [
     typescript({
       tsconfig: './tsconfig.json',
       compilerOptions: {
-        outDir: 'lib-cjs',
-        declaration: true,
-        declarationDir: '.'
+        outDir: 'lib/cjs'
       }
     }),
     resolve({
       preferBuiltins: false
     }),
-    commonjs()
+    commonjs(),
+    terser()
   ],
   external
 };
 
 const esmConfig = {
-  input: 'src/index.ts',
+  input: 'src/index.mts',
   output: {
-    file: 'lib-esm/index.mjs',
+    file: 'lib/esm/index.mjs',
     format: 'esm'
   },
   plugins: [
     typescript({
       tsconfig: './tsconfig.json',
       compilerOptions: {
-        outDir: 'lib-esm',
-        declaration: true,
-        declarationDir: '.'
+        outDir: 'lib/esm'
       }
-    })
+    }),
+    terser()
   ],
   external
 };

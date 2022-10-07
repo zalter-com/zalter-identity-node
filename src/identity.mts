@@ -1,10 +1,10 @@
 import { constants as http2Constants } from 'http2';
 import * as CBOR from '@stablelib/cbor';
-import { ApiClient } from './api-client';
-import { BASE_ENDPOINT } from './constants';
-import { createServiceException } from './exception';
-import { ContentType } from './http';
-import { Credentials, Endpoint } from './types';
+import { ApiClient } from './api-client.mjs';
+import { BASE_ENDPOINT } from './constants.mjs';
+import { createServiceException } from './exception.mjs';
+import { ContentType } from './http.mjs';
+import { Credentials, Endpoint } from './types.mjs';
 
 const {
   HTTP2_HEADER_CONTENT_TYPE,
